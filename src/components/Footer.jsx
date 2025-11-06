@@ -1,4 +1,4 @@
-// src/components/Footer.js
+
 import React from "react";
 import { Box, Typography, useTheme, Link } from "@mui/material";
 
