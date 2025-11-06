@@ -7,7 +7,7 @@ import DataVis from "../assets/certificates/data_visualization.jpg";
 import OrcaleGen from "../assets/certificates/eCertificate_page-0001.jpg";
 import CapbleImg from "../assets/certificates/capble.jpg";
 import JSImg1 from "../assets/certificates/js1.jpg";
-import BajajImg from "../assets/certificates/scan.jpg"; // ✅ Direct import (instead of require)
+import BajajImg from "../assets/certificates/Scan.jpg";
 
 const certificates = [
   {

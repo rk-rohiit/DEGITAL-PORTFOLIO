@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import Particles from "react-tsparticles";
 import { loadSlim } from "tsparticles-slim";
-// import ProfileImg from "../assets/profile.png";
 import ProfileImg from "../assets/p2.jpeg";
 
 const HomeSection = () => {
