@@ -120,6 +120,12 @@ const HomeSection = () => {
         <Button
           variant="contained"
           color="primary"
+          onClick={() => {
+    const aboutSection = document.getElementById("about");
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: "smooth" });
+    }
+  }}
           sx={{
             borderRadius: theme.shape.borderRadius * 5,
             px: 3,

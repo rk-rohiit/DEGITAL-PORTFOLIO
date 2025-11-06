@@ -35,7 +35,7 @@ export default function Footer() {
             },
           }}
         >
-          Rohit Sharma
+          Rohit Kumar
         </Link>
         . All Rights Reserved.
       </Typography>

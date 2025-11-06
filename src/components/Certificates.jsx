@@ -1,59 +1,70 @@
 import React, { useState } from "react";
-import { Award, X, ChevronRight } from "lucide-react";
-import { useTheme, Typography, Button } from "@mui/material";
+import { Award, X, ChevronRight, Trophy } from "lucide-react";
+import { useTheme, Typography, Button, Card, Chip } from "@mui/material";
+
 import CloudImg from "../assets/certificates/cloud_certificate.jpg";
 import DataVis from "../assets/certificates/data_visualization.jpg";
 import OrcaleGen from "../assets/certificates/eCertificate_page-0001.jpg";
 import CapbleImg from "../assets/certificates/capble.jpg";
-import JSImg1 from '../assets/certificates/js1.jpg'
+import JSImg1 from "../assets/certificates/js1.jpg";
+import BajajImg from "../assets/certificates/scan.jpg"; // ✅ Direct import (instead of require)
 
 const certificates = [
   {
     title: "Cloud Computing Basics",
-    desc: "Completed from Lovely Professional University (2023) - covered MERN stack, REST APIs, and deployment.",
+    desc: "Comprehensive understanding of cloud computing fundamentals, services, deployment models, and best practices in cloud architecture.",
     image: CloudImg,
     issuer: "Lovely Professional University",
     year: "2025",
   },
   {
     title: "Data Visualization with Python",
-    desc: "Certified Data Visualization Specialist from Lovely Professional University (2024).",
+    desc: "Mastery in creating interactive and insightful data visualizations using Python libraries including Matplotlib, Seaborn, and Plotly.",
     image: DataVis,
     issuer: "Lovely Professional University",
     year: "2025",
   },
   {
     title: "Oracle Generative AI",
-    desc: "Advanced JavaScript training from FreeCodeCamp (2023).",
+    desc: "Expert certification in Oracle's Generative AI technologies, covering large language models, neural networks, and AI applications.",
     image: OrcaleGen,
     issuer: "Oracle",
     year: "2025",
   },
   {
-    title: "Capble Technology Participant",
-    desc: "Firebase backend and authentication fundamentals (2024).",
+    title: "Capble Technology Training",
+    desc: "Intensive training in modern web development technologies, agile methodologies, and software development best practices.",
     image: CapbleImg,
     issuer: "Capble Technology",
     year: "2025",
   },
   {
     title: "Cisco JavaScript Essentials 1",
-    desc: "Fundamental concepts of JavaScript including variables, data types, functions, and control structures.",
+    desc: "Advanced JavaScript programming certification covering core concepts, ES6+ features, async programming, and web APIs.",
     image: JSImg1,
     issuer: "CISCO",
     year: "2025",
   },
-  
+];
+
+const achievements = [
+  {
+    title: "Bajaj Finserv Training",
+    description: "Team Leader among 200 students",
+    date: "June 2024",
+    image: BajajImg,
+  },
 ];
 
 export default function Certificates() {
+  const theme = useTheme();
   const [showAll, setShowAll] = useState(false);
   const [selectedCert, setSelectedCert] = useState(null);
-  const theme = useTheme();
+  const [selectedAchievement, setSelectedAchievement] = useState(null);
 
-  const handleView = (cert) => setSelectedCert(cert);
-  const handleClose = () => setSelectedCert(null);
-  const displayedCertificates = showAll ? certificates : certificates.slice(0, 3);
+  const displayedCertificates = showAll
+    ? certificates
+    : certificates.slice(0, 3);
 
   return (
     <section
@@ -86,7 +97,11 @@ export default function Certificates() {
             <Award className="w-8 h-8 text-white" />
           </div>
 
-          <Typography variant="h3" className="font-bold mb-4" color="text.primary">
+          <Typography
+            variant="h3"
+            className="font-bold mb-4"
+            color="text.primary"
+          >
             Certificates &{" "}
             <span
               style={{
@@ -107,7 +122,8 @@ export default function Certificates() {
           ></div>
 
           <Typography variant="body1" color="text.secondary">
-            A showcase of my technical certifications, reflecting my learning and professional growth.
+            A showcase of my technical certifications, reflecting my learning
+            and professional growth.
           </Typography>
         </div>
 
@@ -147,12 +163,19 @@ export default function Certificates() {
                   >
                     {cert.issuer}
                   </span>
-                  <span className="text-sm" style={{ color: theme.palette.text.secondary }}>
+                  <span
+                    className="text-sm"
+                    style={{ color: theme.palette.text.secondary }}
+                  >
                     {cert.year}
                   </span>
                 </div>
 
-                <Typography variant="h6" color="text.primary" className="mb-3 line-clamp-2">
+                <Typography
+                  variant="h6"
+                  color="text.primary"
+                  className="mb-3 line-clamp-2"
+                >
                   {cert.title}
                 </Typography>
 
@@ -168,7 +191,7 @@ export default function Certificates() {
                   fullWidth
                   variant="contained"
                   endIcon={<ChevronRight />}
-                  onClick={() => handleView(cert)}
+                  onClick={() => setSelectedCert(cert)}
                   sx={{
                     background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
                     "&:hover": {
@@ -196,6 +219,7 @@ export default function Certificates() {
                 px: 5,
                 py: 1.5,
                 borderRadius: 5,
+                mb: 4,
                 background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
                 "&:hover": {
                   background: `linear-gradient(to right, ${theme.palette.primary.dark}, ${theme.palette.secondary.dark})`,
@@ -208,13 +232,110 @@ export default function Certificates() {
             </Button>
           </div>
         )}
+
+        {/* Achievements Section */}
+        <div className="text-center mb-12">
+          <Typography
+            variant="h4"
+            className="font-bold mb-4"
+            color="text.primary"
+          >
+            Achievements
+          </Typography>
+
+          <div
+            className="w-24 h-1 mx-auto mb-6 rounded-full"
+            style={{
+              background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+            }}
+          ></div>
+        </div>
+
+      {/* Achievements Grid - Centered */}
+<div className="flex justify-center">
+  <div className="grid md:grid-cols-2 gap-8 max-w-5xl w-full mb-16 justify-center">
+    {achievements.map((achievement, index) => (
+      <Card
+        key={index}
+        className="p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border"
+        style={{
+          backgroundColor: theme.palette.background.paper,
+          borderColor: theme.palette.divider,
+        }}
+      >
+        <div className="flex items-start gap-4">
+          <div
+            className="p-3 rounded-xl flex-shrink-0"
+            style={{
+              backgroundColor: theme.palette.primary.main + "15",
+            }}
+          >
+            <Trophy
+              className="w-6 h-6"
+              style={{ color: theme.palette.primary.main }}
+            />
+          </div>
+
+          <div className="flex-grow">
+            <Typography
+              variant="h6"
+              color="text.primary"
+              className="font-semibold mb-1"
+            >
+              {achievement.title}
+            </Typography>
+
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              className="mb-3"
+            >
+              {achievement.description}
+            </Typography>
+
+            <Chip
+              label={achievement.date}
+              variant="outlined"
+              size="small"
+              sx={{
+                color: theme.palette.text.secondary,
+                borderColor: theme.palette.divider,
+                fontWeight: 500,
+                mb: 2,
+              }}
+            />
+
+            <Button
+              fullWidth
+              variant="outlined"
+              endIcon={<ChevronRight />}
+              onClick={() => setSelectedAchievement(achievement)}
+              sx={{
+                borderRadius: 3,
+                py: 1.2,
+                color: theme.palette.primary.main,
+                borderColor: theme.palette.primary.main,
+                "&:hover": {
+                  backgroundColor: theme.palette.primary.main + "10",
+                },
+              }}
+            >
+              View Achievement
+            </Button>
+          </div>
+        </div>
+      </Card>
+    ))}
+  </div>
+</div>
+
       </div>
 
-      {/* Modal */}
-      {selectedCert && (
+      {/* Achievement Modal */}
+      {selectedAchievement && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-fadeIn"
-          onClick={handleClose}
+          onClick={() => setSelectedAchievement(null)}
         >
           <div
             className="relative rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-auto animate-scaleIn"
@@ -222,7 +343,63 @@ export default function Certificates() {
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              onClick={handleClose}
+              onClick={() => setSelectedAchievement(null)}
+              className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full shadow-md bg-white/90 hover:bg-white transition-all"
+            >
+              <X className="w-5 h-5 text-gray-700 hover:rotate-90 transition-transform duration-300" />
+            </button>
+
+            <div className="p-8">
+              <Typography variant="h5" color="text.primary" gutterBottom>
+                {selectedAchievement.title}
+              </Typography>
+              <Typography color="text.secondary" className="mb-4">
+                {selectedAchievement.description}
+              </Typography>
+
+              <div className="rounded-xl overflow-hidden shadow-lg bg-gray-100 mb-6">
+                <img
+                  src={selectedAchievement.image}
+                  alt={selectedAchievement.title}
+                  className="w-full h-auto object-contain max-h-[60vh]"
+                />
+              </div>
+
+              <div
+                className="p-4 rounded-xl border"
+                style={{
+                  background: `linear-gradient(to right, ${theme.palette.primary.main}10, ${theme.palette.secondary.main}10)`,
+                  borderColor: theme.palette.primary.main + "30",
+                }}
+              >
+                <div className="flex items-center gap-2 text-sm">
+                  <Trophy
+                    className="w-5 h-5"
+                    style={{ color: theme.palette.primary.main }}
+                  />
+                  <span className="font-semibold text-gray-700">
+                    Achievement
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Certificate Modal */}
+      {selectedCert && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-fadeIn"
+          onClick={() => setSelectedCert(null)}
+        >
+          <div
+            className="relative rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-auto animate-scaleIn"
+            style={{ backgroundColor: theme.palette.background.paper }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelectedCert(null)}
               className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full shadow-md bg-white/90 hover:bg-white transition-all"
             >
               <X className="w-5 h-5 text-gray-700 hover:rotate-90 transition-transform duration-300" />
@@ -266,6 +443,7 @@ export default function Certificates() {
         </div>
       )}
 
+      {/* Animations */}
       <style jsx>{`
         @keyframes fadeIn {
           from {
