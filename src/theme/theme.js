@@ -69,6 +69,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 10,
+          cursor: "pointer",
           padding: "10px 22px",
           fontWeight: 600,
           transition: "all 0.3s ease",
