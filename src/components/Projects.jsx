@@ -11,7 +11,7 @@ const Projects = () => {
       description:
         "Built a campus marketplace platform enabling verified students to sell, rent, and buy products. Implemented secure authentication and listing features with seamless integration.",
       tech: ["React.js", "Express.js", "MongoDB", "JWT"],
-      date: "September 2024",
+      date: "September 2025",
       status: "Live",
       link: "https://collex-dev.vercel.app/",
     },
@@ -20,7 +20,7 @@ const Projects = () => {
       description:
         "Designed a comprehensive hotel management system with modern UI and secure authentication. Built REST APIs for smooth frontend-backend communication.",
       tech: ["NEXT Js", "CSS", "JavaScript", "Material UI", "MongoDB", "Node.js"],
-      date: "June 2024",
+      date: "December 2024",
       status: "Live",
       link: "https://restrosol.bizpluscrm.in/",
     },
