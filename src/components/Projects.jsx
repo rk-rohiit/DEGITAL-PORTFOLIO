@@ -29,7 +29,7 @@ const Projects = () => {
       description:
         "Developed a software solution for small shopkeepers to efficiently manage inventory and reduce product loss through smart tracking modules.",
       tech: ["Visual Basic", "Oracle SQL"],
-      date: "February 2024",
+      date: "February 2025",
       status: "Completed",
     },
   ];
