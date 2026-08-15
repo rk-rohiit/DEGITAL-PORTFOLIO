@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Award, X, ChevronRight, Trophy } from "lucide-react";
-import { useTheme, Typography, Button, Card, Chip } from "@mui/material";
+import { useTheme, Typography, Button, Card, Chip, Box } from "@mui/material";
+import { motion, AnimatePresence } from "framer-motion";
 
 import CloudImg from "../assets/certificates/cloud_certificate.jpg";
 import DataVis from "../assets/certificates/data_visualization.jpg";
@@ -68,26 +69,33 @@ export default function Certificates() {
 
   return (
     <section
-      className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      id="certificates"
+      className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
       style={{
-        background: `linear-gradient(to bottom right, ${theme.palette.background.default}, ${theme.palette.secondary.main}10)`,
+        background: `linear-gradient(to bottom right, ${theme.palette.background.default}, ${theme.palette.secondary.main}08)`,
       }}
     >
       {/* Background Decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
           className="absolute -top-40 -right-40 w-80 h-80 rounded-full blur-3xl"
-          style={{ backgroundColor: theme.palette.primary.main + "15" }}
+          style={{ backgroundColor: theme.palette.primary.main + "08" }}
         ></div>
         <div
           className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full blur-3xl"
-          style={{ backgroundColor: theme.palette.secondary.main + "15" }}
+          style={{ backgroundColor: theme.palette.secondary.main + "08" }}
         ></div>
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
-        <div className="text-center mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-20"
+        >
           <div
             className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6 shadow-lg"
             style={{
@@ -99,7 +107,11 @@ export default function Certificates() {
 
           <Typography
             variant="h3"
-            className="font-bold mb-4"
+            sx={{
+              fontWeight: 800,
+              fontFamily: '"Poppins", sans-serif',
+              mb: 2,
+            }}
             color="text.primary"
           >
             Certificates &{" "}
@@ -121,72 +133,108 @@ export default function Certificates() {
             }}
           ></div>
 
-          <Typography variant="body1" color="text.secondary">
+          <Typography
+            variant="body1"
+            sx={{
+              color: theme.palette.text.secondary,
+              fontFamily: '"Poppins", sans-serif',
+              fontSize: "1.1rem",
+              maxWidth: 600,
+              mx: "auto",
+            }}
+          >
             A showcase of my technical certifications, reflecting my learning
             and professional growth.
           </Typography>
-        </div>
+        </motion.div>
 
         {/* Certificate Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {displayedCertificates.map((cert, index) => (
-            <div
+            <motion.div
               key={index}
-              className="group rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border transform hover:-translate-y-1"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              whileHover={{
+                y: -8,
+                boxShadow: "0 20px 40px rgba(204, 1, 2, 0.08)",
+                borderColor: `${theme.palette.primary.light}25`,
+              }}
+              className="group rounded-2xl overflow-hidden border transition-colors duration-300 flex flex-col justify-between"
               style={{
                 borderColor: theme.palette.divider,
                 backgroundColor: theme.palette.background.paper,
               }}
             >
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  src={cert.image}
-                  alt={cert.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{
-                    background: `linear-gradient(to top, ${theme.palette.primary.main}60, transparent)`,
-                  }}
-                ></div>
-              </div>
-
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <span
-                    className="inline-block px-3 py-1 text-xs font-semibold rounded-full"
+              <div>
+                <div className="relative h-48 overflow-hidden bg-gray-50">
+                  <img
+                    src={cert.image}
+                    alt={cert.title}
+                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+                  />
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     style={{
-                      backgroundColor: theme.palette.primary.main + "15",
-                      color: theme.palette.primary.main,
+                      background: `linear-gradient(to top, ${theme.palette.primary.main}40, transparent)`,
                     }}
-                  >
-                    {cert.issuer}
-                  </span>
-                  <span
-                    className="text-sm"
-                    style={{ color: theme.palette.text.secondary }}
-                  >
-                    {cert.year}
-                  </span>
+                  ></div>
                 </div>
 
-                <Typography
-                  variant="h6"
-                  color="text.primary"
-                  className="mb-3 line-clamp-2"
-                >
-                  {cert.title}
-                </Typography>
+                <div className="p-6 pb-2 text-left">
+                  <div className="flex items-center justify-between mb-3">
+                    <span
+                      className="inline-block px-3 py-0.5 text-xs font-semibold rounded-full border"
+                      style={{
+                        backgroundColor: theme.palette.primary.main + "08",
+                        color: theme.palette.primary.main,
+                        borderColor: theme.palette.primary.main + "15",
+                      }}
+                    >
+                      {cert.issuer}
+                    </span>
+                    <span
+                      className="text-xs font-medium"
+                      style={{ color: theme.palette.text.secondary }}
+                    >
+                      {cert.year}
+                    </span>
+                  </div>
 
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  className="mb-4 line-clamp-3"
-                >
-                  {cert.desc}
-                </Typography>
+                  <Typography
+                    variant="h6"
+                    color="text.primary"
+                    sx={{
+                      fontWeight: 700,
+                      fontFamily: '"Poppins", sans-serif',
+                      fontSize: "1.15rem",
+                      mb: 1.5,
+                      lineHeight: 1.35,
+                    }}
+                    className="line-clamp-2"
+                  >
+                    {cert.title}
+                  </Typography>
 
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{
+                      fontFamily: '"Poppins", sans-serif',
+                      lineHeight: 1.6,
+                      fontSize: "0.9rem",
+                      mb: 2,
+                    }}
+                    className="line-clamp-3"
+                  >
+                    {cert.desc}
+                  </Typography>
+                </div>
+              </div>
+
+              <div className="p-6 pt-0">
                 <Button
                   fullWidth
                   variant="contained"
@@ -199,18 +247,21 @@ export default function Certificates() {
                     },
                     borderRadius: 3,
                     py: 1.2,
+                    textTransform: "none",
+                    fontWeight: 600,
+                    boxShadow: "0 4px 12px rgba(204, 1, 2, 0.15)",
                   }}
                 >
                   View Certificate
                 </Button>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* View All Button */}
         {!showAll && certificates.length > 3 && (
-          <div className="flex justify-center">
+          <div className="flex justify-center mb-20">
             <Button
               variant="contained"
               endIcon={<ChevronRight />}
@@ -219,13 +270,14 @@ export default function Certificates() {
                 px: 5,
                 py: 1.5,
                 borderRadius: 5,
-                mb: 4,
                 background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
                 "&:hover": {
                   background: `linear-gradient(to right, ${theme.palette.primary.dark}, ${theme.palette.secondary.dark})`,
                 },
                 color: "#fff",
                 fontWeight: 600,
+                textTransform: "none",
+                boxShadow: "0 6px 15px rgba(204, 1, 2, 0.2)",
               }}
             >
               View All Certificates
@@ -233,11 +285,21 @@ export default function Certificates() {
           </div>
         )}
 
-        {/* Achievements Section */}
-        <div className="text-center mb-12">
+        {/* Achievements Section Title */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
           <Typography
             variant="h4"
-            className="font-bold mb-4"
+            sx={{
+              fontWeight: 800,
+              fontFamily: '"Poppins", sans-serif',
+              mb: 2,
+            }}
             color="text.primary"
           >
             Achievements
@@ -249,244 +311,289 @@ export default function Certificates() {
               background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
             }}
           ></div>
-        </div>
+        </motion.div>
 
-      {/* Achievements Grid - Centered */}
-<div className="flex justify-center">
-  <div className="grid md:grid-cols-2 gap-8 max-w-5xl w-full mb-16 justify-center">
-    {achievements.map((achievement, index) => (
-      <Card
-        key={index}
-        className="p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border"
-        style={{
-          backgroundColor: theme.palette.background.paper,
-          borderColor: theme.palette.divider,
-        }}
-      >
-        <div className="flex items-start gap-4">
-          <div
-            className="p-3 rounded-xl flex-shrink-0"
-            style={{
-              backgroundColor: theme.palette.primary.main + "15",
-            }}
-          >
-            <Trophy
-              className="w-6 h-6"
-              style={{ color: theme.palette.primary.main }}
-            />
-          </div>
-
-          <div className="flex-grow">
-            <Typography
-              variant="h6"
-              color="text.primary"
-              className="font-semibold mb-1"
-            >
-              {achievement.title}
-            </Typography>
-
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              className="mb-3"
-            >
-              {achievement.description}
-            </Typography>
-
-            <Chip
-              label={achievement.date}
-              variant="outlined"
-              size="small"
-              sx={{
-                color: theme.palette.text.secondary,
-                borderColor: theme.palette.divider,
-                fontWeight: 500,
-                mb: 2,
-              }}
-            />
-
-            <Button
-              fullWidth
-              variant="outlined"
-              endIcon={<ChevronRight />}
-              onClick={() => setSelectedAchievement(achievement)}
-              sx={{
-                borderRadius: 3,
-                py: 1.2,
-                color: theme.palette.primary.main,
-                borderColor: theme.palette.primary.main,
-                "&:hover": {
-                  backgroundColor: theme.palette.primary.main + "10",
-                },
-              }}
-            >
-              View Achievement
-            </Button>
-          </div>
-        </div>
-      </Card>
-    ))}
-  </div>
-</div>
-
-      </div>
-
-      {/* Achievement Modal */}
-      {selectedAchievement && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-fadeIn"
-          onClick={() => setSelectedAchievement(null)}
-        >
-          <div
-            className="relative rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-auto animate-scaleIn"
-            style={{ backgroundColor: theme.palette.background.paper }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setSelectedAchievement(null)}
-              className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full shadow-md bg-white/90 hover:bg-white transition-all"
-            >
-              <X className="w-5 h-5 text-gray-700 hover:rotate-90 transition-transform duration-300" />
-            </button>
-
-            <div className="p-8">
-              <Typography variant="h5" color="text.primary" gutterBottom>
-                {selectedAchievement.title}
-              </Typography>
-              <Typography color="text.secondary" className="mb-4">
-                {selectedAchievement.description}
-              </Typography>
-
-              <div className="rounded-xl overflow-hidden shadow-lg bg-gray-100 mb-6">
-                <img
-                  src={selectedAchievement.image}
-                  alt={selectedAchievement.title}
-                  className="w-full h-auto object-contain max-h-[60vh]"
-                />
-              </div>
-
-              <div
-                className="p-4 rounded-xl border"
+        {/* Achievements Grid - Centered */}
+        <div className="flex justify-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full mb-16 justify-center">
+            {achievements.map((achievement, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                whileHover={{
+                  y: -6,
+                  boxShadow: "0 15px 35px rgba(204, 1, 2, 0.08)",
+                  borderColor: `${theme.palette.primary.light}25`,
+                }}
+                className="p-6 rounded-2xl border transition-colors duration-300 w-full"
                 style={{
-                  background: `linear-gradient(to right, ${theme.palette.primary.main}10, ${theme.palette.secondary.main}10)`,
-                  borderColor: theme.palette.primary.main + "30",
+                  backgroundColor: theme.palette.background.paper,
+                  borderColor: theme.palette.divider,
                 }}
               >
-                <div className="flex items-center gap-2 text-sm">
+                <div className="flex items-start gap-4 text-left">
+                  <div
+                    className="p-3 rounded-xl flex-shrink-0"
+                    style={{
+                      backgroundColor: theme.palette.primary.main + "08",
+                    }}
+                  >
+                    <Trophy
+                      className="w-6 h-6"
+                      style={{ color: theme.palette.primary.main }}
+                    />
+                  </div>
+
+                  <div className="flex-grow">
+                    <Typography
+                      variant="h6"
+                      color="text.primary"
+                      sx={{
+                        fontWeight: 700,
+                        fontFamily: '"Poppins", sans-serif',
+                        fontSize: "1.15rem",
+                        mb: 0.5,
+                      }}
+                    >
+                      {achievement.title}
+                    </Typography>
+
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{
+                        fontFamily: '"Poppins", sans-serif',
+                        mb: 2,
+                      }}
+                    >
+                      {achievement.description}
+                    </Typography>
+
+                    <Chip
+                      label={achievement.date}
+                      variant="outlined"
+                      size="small"
+                      sx={{
+                        color: theme.palette.text.secondary,
+                        borderColor: theme.palette.divider,
+                        fontWeight: 600,
+                        fontFamily: '"Poppins", sans-serif',
+                        mb: 3,
+                      }}
+                    />
+
+                    <Button
+                      fullWidth
+                      variant="outlined"
+                      endIcon={<ChevronRight />}
+                      onClick={() => setSelectedAchievement(achievement)}
+                      sx={{
+                        borderRadius: 3,
+                        py: 1.2,
+                        color: theme.palette.primary.main,
+                        borderColor: theme.palette.primary.main,
+                        textTransform: "none",
+                        fontWeight: 600,
+                        "&:hover": {
+                          backgroundColor: theme.palette.primary.main + "08",
+                          borderColor: theme.palette.primary.main,
+                        },
+                      }}
+                    >
+                      View Achievement
+                    </Button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Achievement Modal using AnimatePresence */}
+      <AnimatePresence>
+        {selectedAchievement && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
+            onClick={() => setSelectedAchievement(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.93, y: 15, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.93, y: 15, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 260, damping: 22 }}
+              className="relative rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-auto text-left"
+              style={{ backgroundColor: theme.palette.background.paper }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setSelectedAchievement(null)}
+                className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full shadow-md bg-white/90 hover:bg-white transition-all z-20"
+              >
+                <X className="w-5 h-5 text-gray-700 hover:rotate-90 transition-transform duration-300" />
+              </button>
+
+              <div className="p-6 md:p-8">
+                <Typography
+                  variant="h5"
+                  color="text.primary"
+                  sx={{
+                    fontWeight: 700,
+                    fontFamily: '"Poppins", sans-serif',
+                    mb: 1,
+                  }}
+                >
+                  {selectedAchievement.title}
+                </Typography>
+                <Typography
+                  color="text.secondary"
+                  sx={{
+                    fontFamily: '"Poppins", sans-serif',
+                    mb: 4,
+                  }}
+                >
+                  {selectedAchievement.description}
+                </Typography>
+
+                <div className="rounded-xl overflow-hidden shadow-lg bg-gray-50 border border-gray-100 mb-6 flex justify-center">
+                  <img
+                    src={selectedAchievement.image}
+                    alt={selectedAchievement.title}
+                    className="w-full h-auto object-contain max-h-[55vh]"
+                  />
+                </div>
+
+                <div
+                  className="p-4 rounded-xl border flex items-center gap-2 text-sm"
+                  style={{
+                    background: `linear-gradient(to right, ${theme.palette.primary.main}08, ${theme.palette.secondary.main}08)`,
+                    borderColor: theme.palette.primary.main + "20",
+                  }}
+                >
                   <Trophy
                     className="w-5 h-5"
                     style={{ color: theme.palette.primary.main }}
                   />
-                  <span className="font-semibold text-gray-700">
-                    Achievement
+                  <span
+                    className="font-semibold text-gray-700"
+                    style={{ fontFamily: '"Poppins", sans-serif' }}
+                  >
+                    Awarded Achievement
                   </span>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Certificate Modal */}
-      {selectedCert && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-fadeIn"
-          onClick={() => setSelectedCert(null)}
-        >
-          <div
-            className="relative rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-auto animate-scaleIn"
-            style={{ backgroundColor: theme.palette.background.paper }}
-            onClick={(e) => e.stopPropagation()}
+      {/* Certificate Modal using AnimatePresence */}
+      <AnimatePresence>
+        {selectedCert && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
+            onClick={() => setSelectedCert(null)}
           >
-            <button
-              onClick={() => setSelectedCert(null)}
-              className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full shadow-md bg-white/90 hover:bg-white transition-all"
+            <motion.div
+              initial={{ scale: 0.93, y: 15, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.93, y: 15, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 260, damping: 22 }}
+              className="relative rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-auto text-left"
+              style={{ backgroundColor: theme.palette.background.paper }}
+              onClick={(e) => e.stopPropagation()}
             >
-              <X className="w-5 h-5 text-gray-700 hover:rotate-90 transition-transform duration-300" />
-            </button>
-
-            <div className="p-8">
-              <Typography variant="h5" color="text.primary" gutterBottom>
-                {selectedCert.title}
-              </Typography>
-              <Typography color="text.secondary" className="mb-4">
-                {selectedCert.desc}
-              </Typography>
-
-              <div className="rounded-xl overflow-hidden shadow-lg bg-gray-100 mb-6">
-                <img
-                  src={selectedCert.image}
-                  alt={selectedCert.title}
-                  className="w-full h-auto object-contain max-h-[60vh]"
-                />
-              </div>
-
-              <div
-                className="p-4 rounded-xl border"
-                style={{
-                  background: `linear-gradient(to right, ${theme.palette.primary.main}10, ${theme.palette.secondary.main}10)`,
-                  borderColor: theme.palette.primary.main + "30",
-                }}
+              <button
+                onClick={() => setSelectedCert(null)}
+                className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full shadow-md bg-white/90 hover:bg-white transition-all z-20"
               >
-                <div className="flex items-center gap-2 text-sm">
+                <X className="w-5 h-5 text-gray-700 hover:rotate-90 transition-transform duration-300" />
+              </button>
+
+              <div className="p-6 md:p-8">
+                <Typography
+                  variant="h5"
+                  color="text.primary"
+                  sx={{
+                    fontWeight: 700,
+                    fontFamily: '"Poppins", sans-serif',
+                    mb: 1,
+                  }}
+                >
+                  {selectedCert.title}
+                </Typography>
+                <Typography
+                  color="text.secondary"
+                  sx={{
+                    fontFamily: '"Poppins", sans-serif',
+                    mb: 4,
+                  }}
+                >
+                  {selectedCert.desc}
+                </Typography>
+
+                <div className="rounded-xl overflow-hidden shadow-lg bg-gray-50 border border-gray-100 mb-6 flex justify-center">
+                  <img
+                    src={selectedCert.image}
+                    alt={selectedCert.title}
+                    className="w-full h-auto object-contain max-h-[55vh]"
+                  />
+                </div>
+
+                <div
+                  className="p-4 rounded-xl border flex items-center gap-2 text-sm"
+                  style={{
+                    background: `linear-gradient(to right, ${theme.palette.primary.main}08, ${theme.palette.secondary.main}08)`,
+                    borderColor: theme.palette.primary.main + "20",
+                  }}
+                >
                   <Award
                     className="w-5 h-5"
                     style={{ color: theme.palette.primary.main }}
                   />
-                  <span className="font-semibold text-gray-700">
-                    Certified Professional
+                  <span
+                    className="font-semibold text-gray-700"
+                    style={{ fontFamily: '"Poppins", sans-serif' }}
+                  >
+                    Certified Professional Verification
                   </span>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Animations */}
-      <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-
-        @keyframes scaleIn {
-          from {
-            opacity: 0;
-            transform: scale(0.95);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-
-        .animate-fadeIn {
-          animation: fadeIn 0.2s ease-out;
-        }
-
-        .animate-scaleIn {
-          animation: scaleIn 0.3s ease-out;
-        }
-
-        .line-clamp-2 {
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-
-        .line-clamp-3 {
-          display: -webkit-box;
-          -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-      `}</style>
+      {styleTagSnippet}
     </section>
   );
 }
+
+// Scoped inline CSS styles
+const styleTagSnippet = (
+  <style>{`
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .line-clamp-3 {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  `}</style>
+);
+

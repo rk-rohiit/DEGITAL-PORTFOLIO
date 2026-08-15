@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@mui/material";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -19,11 +21,17 @@ const Navbar = () => {
     { name: "About", href: "#about" },
     { name: "Skills", href: "#skills" },
     { name: "Projects", href: "#projects" },
+    { name: "Services", href: "/services", isRoute: true },
     { name: "Education", href: "#education" },
     { name: "Contact", href: "#contact" },
   ];
 
   const scrollToSection = (href) => {
+    if (window.location.pathname !== "/") {
+      // Redirect back to home with the target anchor hash
+      window.location.href = "/" + href;
+      return;
+    }
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
@@ -31,7 +39,16 @@ const Navbar = () => {
     }
   };
 
-  // ✅ Function to handle resume download
+  const handleNavLinkClick = (e, link) => {
+    e.preventDefault();
+    if (link.isRoute) {
+      navigate(link.href);
+      setIsMobileMenuOpen(false);
+    } else {
+      scrollToSection(link.href);
+    }
+  };
+
   const handleResumeDownload = () => {
     const link = document.createElement("a");
     link.href = "/Rohit_cv.pdf"; 
@@ -51,10 +68,14 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <a
-            href="#hero"
+            href={window.location.pathname === "/" ? "#home" : "/"}
             onClick={(e) => {
               e.preventDefault();
-              scrollToSection("#hero");
+              if (window.location.pathname !== "/") {
+                navigate("/");
+              } else {
+                scrollToSection("#home");
+              }
             }}
             className="text-2xl font-bold bg-gradient-to-r from-red-600 to-rose-500 bg-clip-text text-transparent"
           >
@@ -67,10 +88,7 @@ const Navbar = () => {
               <a
                 key={link.name}
                 href={link.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection(link.href);
-                }}
+                onClick={(e) => handleNavLinkClick(e, link)}
                 className="text-gray-700 hover:text-red-600 transition-colors font-medium"
               >
                 {link.name}
@@ -110,10 +128,7 @@ const Navbar = () => {
               <a
                 key={link.name}
                 href={link.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection(link.href);
-                }}
+                onClick={(e) => handleNavLinkClick(e, link)}
                 className="text-gray-700 hover:text-red-600 transition-colors font-medium py-2 text-center"
               >
                 {link.name}

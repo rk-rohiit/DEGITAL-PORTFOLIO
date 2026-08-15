@@ -1,6 +1,6 @@
-import React from "react";
-import { Typography, Card, CardContent, Grid } from "@mui/material";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { Typography, Card, CardContent } from "@mui/material";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
 
 const skills = [
@@ -8,132 +8,116 @@ const skills = [
   {
     name: "React",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-    color: "from-cyan-500 to-blue-500",
+    category: "Frontend",
   },
   {
     name: "Material UI",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/materialui/materialui-original.svg",
-    color: "from-blue-600 to-indigo-600",
+    category: "Frontend",
   },
-  // {
-  //   name: "Tailwind CSS",
-  //   icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg",
-  //   color: "from-teal-500 to-cyan-500",
-  // },
   {
     name: "JavaScript",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
-    color: "from-yellow-400 to-orange-400",
+    category: "Frontend",
   },
 
   // --- Backend ---
   {
     name: "Node.js",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
-    color: "from-green-500 to-emerald-600",
+    category: "Backend",
   },
   {
     name: "MongoDB",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
-    color: "from-green-600 to-teal-600",
+    category: "Backend",
   },
   {
     name: "Firebase",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
-    color: "from-amber-500 to-orange-500",
+    category: "Backend",
   },
 
   // --- Programming Languages ---
   {
     name: "C",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg",
-    color: "from-sky-500 to-blue-600",
+    category: "Languages",
   },
   {
     name: "C++",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
-    color: "from-blue-500 to-indigo-600",
+    category: "Languages",
   },
   {
     name: "Java",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
-    color: "from-red-500 to-orange-500",
+    category: "Languages",
   },
   {
     name: "Python",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-    color: "from-yellow-400 to-blue-500",
+    category: "Languages",
   },
 
   // --- Tools & Platforms ---
   {
     name: "Git",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
-    color: "from-orange-600 to-red-500",
+    category: "Tools",
   },
   {
     name: "GitHub",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
-    color: "from-gray-700 to-gray-900",
+    category: "Tools",
   },
   {
     name: "VS Code",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg",
-    color: "from-blue-500 to-cyan-600",
+    category: "Tools",
   },
   {
     name: "IntelliJ IDEA",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/intellij/intellij-original.svg",
-    color: "from-purple-600 to-indigo-600",
+    category: "Tools",
   },
 
   // --- Design & Visualization ---
   {
     name: "Figma",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",
-    color: "from-pink-500 to-purple-500",
+    category: "AI & Design",
   },
   {
     name: "Data Visualization",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/d3js/d3js-original.svg",
-    color: "from-orange-400 to-yellow-500",
+    category: "AI & Design",
   },
 
   // --- AI & Productivity ---
   {
     name: "ChatGPT",
     icon: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
-    color: "from-emerald-500 to-teal-600",
+    category: "AI & Design",
   },
-  
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut" },
-  },
-};
+const categories = ["All", "Frontend", "Backend", "Languages", "Tools", "AI & Design"];
 
 export default function Skills() {
   const theme = useTheme();
+  const [activeTab, setActiveTab] = useState("All");
+
+  const filteredSkills = activeTab === "All"
+    ? skills
+    : skills.filter((skill) => skill.category === activeTab);
 
   return (
     <section
       id="skills"
-      className="relative py-24 px-6 overflow-hidden"
+      className="relative py-24 px-6 md:px-20 overflow-hidden"
       style={{
-        background: `linear-gradient(135deg, ${theme.palette.background.default}, #f3f4f6)`,
+        background: `linear-gradient(135deg, ${theme.palette.background.default}, #f8fafc)`,
       }}
     >
       {/* Decorative background glows */}
@@ -149,130 +133,161 @@ export default function Skills() {
         }}
       ></div>
 
-      {/* Section Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="max-w-6xl mx-auto text-center relative z-10"
-      >
-        <Typography
-          variant="h3"
-          sx={{
-            fontWeight: 700,
-            background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            mb: 1,
-          }}
-        >
-          Skills & Technologies
-        </Typography>
-        <div
-          className="mx-auto mb-4"
-          style={{
-            width: "80px",
-            height: "4px",
-            background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-            borderRadius: "4px",
-          }}
-        ></div>
-        <Typography
-          variant="body1"
-          sx={{
-            color: theme.palette.text.secondary,
-            maxWidth: "700px",
-            mx: "auto",
-            mb: 8,
-          }}
-        >
-          Proficient in modern web technologies, design tools, and AI-assisted
-          development to build robust and creative solutions.
-        </Typography>
-
-        {/* Skills Grid */}
+      <div className="max-w-6xl mx-auto text-center relative z-10">
+        {/* Section Header */}
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <Grid container spacing={3} justifyContent="center">
-            {skills.map((skill, index) => (
-              <Grid item xs={6} sm={4} md={3} key={index}>
-                <motion.div
-                  variants={itemVariants}
-                  whileHover={{
-                    y: -8,
-                    transition: { duration: 0.3 },
+          <Typography
+            variant="h3"
+            sx={{
+              fontWeight: 800,
+              background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              fontFamily: '"Poppins", sans-serif',
+              mb: 2,
+            }}
+          >
+            Skills & Technologies
+          </Typography>
+          <div
+            className="mx-auto mb-6"
+            style={{
+              width: "80px",
+              height: "4px",
+              background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+              borderRadius: "4px",
+            }}
+          ></div>
+          <Typography
+            variant="body1"
+            sx={{
+              color: theme.palette.text.secondary,
+              fontFamily: '"Poppins", sans-serif',
+              maxWidth: "650px",
+              mx: "auto",
+              mb: 8,
+              fontSize: "1.1rem",
+            }}
+          >
+            Proficient in modern web technologies, development tools, and AI tools
+            to build creative and scalable applications.
+          </Typography>
+        </motion.div>
+
+        {/* Category Pills Menu */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          viewport={{ once: true }}
+          className="flex flex-wrap justify-center gap-3 mb-16"
+        >
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveTab(cat)}
+              className={`px-5 py-2 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 cursor-pointer ${
+                activeTab === cat
+                  ? "text-white shadow-md shadow-red-500/15"
+                  : "bg-white text-gray-600 hover:bg-gray-100/70 border border-gray-100"
+              }`}
+              style={{
+                fontFamily: '"Poppins", sans-serif',
+                background: activeTab === cat
+                  ? `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`
+                  : undefined,
+              }}
+            >
+              {cat}
+            </button>
+          ))}
+        </motion.div>
+
+        {/* Interactive Skills Grid */}
+        <motion.div layout className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+          <AnimatePresence mode="popLayout">
+            {filteredSkills.map((skill) => (
+              <motion.div
+                layout
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.85 }}
+                transition={{ duration: 0.3 }}
+                key={skill.name}
+              >
+                <Card
+                  className="group relative overflow-hidden"
+                  sx={{
+                    borderRadius: 4,
+                    border: "1px solid rgba(0, 0, 0, 0.05)",
+                    background: "rgba(255, 255, 255, 0.85)",
+                    backdropFilter: "blur(10px)",
+                    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.02)",
+                    transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                    "&:hover": {
+                      transform: "translateY(-6px)",
+                      boxShadow: "0 15px 35px rgba(204, 1, 2, 0.08)",
+                      borderColor: `${theme.palette.primary.light}25`,
+                    },
                   }}
-                  className="h-full"
                 >
-                  <Card
+                  <CardContent
                     sx={{
-                      borderRadius: 3,
-                      height: "100%",
-                      backdropFilter: "blur(8px)",
-                      backgroundColor: "rgba(255,255,255,0.9)",
-                      border: `1px solid ${theme.palette.divider}`,
-                      boxShadow:
-                        "0 4px 16px rgba(0,0,0,0.05), 0 0 10px rgba(204,1,2,0.05)",
-                      transition: "all 0.3s ease",
-                      "&:hover": {
-                        boxShadow:
-                          "0 10px 24px rgba(204,1,2,0.15), 0 0 20px rgba(255,111,97,0.1)",
-                        transform: "translateY(-4px)",
-                      },
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: 2,
+                      p: 4,
                     }}
                   >
-                    <CardContent
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        gap: 2,
-                        p: 4,
-                      }}
-                    >
-                      <div className="relative">
-                        <div
-                          className="absolute inset-0 rounded-2xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"
-                          style={{
-                            background: `linear-gradient(to bottom right, ${theme.palette.primary.light}, ${theme.palette.secondary.light})`,
-                          }}
-                        ></div>
-                        <div
-                          className="relative bg-white rounded-2xl p-4 shadow-sm group-hover:shadow-md transition-all duration-300"
-                          style={{
-                            border: `1px solid ${theme.palette.divider}`,
-                          }}
-                        >
-                          <img
-                            src={skill.icon}
-                            alt={skill.name}
-                            className="w-14 h-14 object-contain transition-transform duration-300 group-hover:scale-110"
-                          />
-                        </div>
-                      </div>
-                      <Typography
-                        variant="subtitle1"
-                        sx={{
-                          fontWeight: 600,
-                          color: theme.palette.text.primary,
-                          textAlign: "center",
+                    {/* Glowing back circle */}
+                    <div className="relative">
+                      <div
+                        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl"
+                        style={{
+                          background: `linear-gradient(to bottom right, ${theme.palette.primary.light}, ${theme.palette.secondary.light})`,
+                        }}
+                      ></div>
+                      
+                      {/* Icon container */}
+                      <div
+                        className="relative bg-gray-50/60 rounded-2xl p-4 border border-gray-100/60 transition-all duration-300 group-hover:scale-108 group-hover:bg-white group-hover:shadow-sm"
+                        style={{
+                          borderColor: theme.palette.divider,
                         }}
                       >
-                        {skill.name}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              </Grid>
+                        <img
+                          src={skill.icon}
+                          alt={skill.name}
+                          className="w-12 h-12 object-contain"
+                        />
+                      </div>
+                    </div>
+
+                    <Typography
+                      variant="subtitle2"
+                      sx={{
+                        fontWeight: 700,
+                        color: theme.palette.text.primary,
+                        fontFamily: '"Poppins", sans-serif',
+                        fontSize: "0.95rem",
+                        textAlign: "center",
+                      }}
+                    >
+                      {skill.name}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
-          </Grid>
+          </AnimatePresence>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 }

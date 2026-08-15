@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HeroSection from "../components/HeroSection";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -11,18 +11,32 @@ import About from "../components/About";
 import Education from "../components/Education.jsx";
 
 const Home = () => {
+  useEffect(() => {
+    // If a hash exists in the URL (e.g. /#projects), scroll smoothly to the element
+    if (window.location.hash) {
+      const element = document.querySelector(window.location.hash);
+      if (element) {
+        // Delay slightly to ensure elements are fully mounted
+        const timer = setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 150);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, []);
+
   return (
     <>
-    <Navbar />
-            <HeroSection />
-            <About />
-            <Skills />
-            <Projects />
-            <Certificates/>
-            {/* <Testimonials/> */}
-            <Education />
-            <Contact />
-            <Footer />
+      <Navbar />
+      <HeroSection />
+      <About />
+      <Skills />
+      <Projects />
+      <Certificates />
+      {/* <Testimonials/> */}
+      <Education />
+      <Contact />
+      <Footer />
     </>
   );
 };
