@@ -6,25 +6,29 @@ import Home from "./pages/Home";
 import ServicesPage from "./pages/ServicesPage";
 import NotFound from "./pages/NotFound";
 import Preloader from "./components/Preloader";
+import MagneticCursor from "./components/MagneticCursor";
 import { AnimatePresence } from "framer-motion";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
 
+  // Safety fallback: maximum 1 second if onComplete was somehow delayed
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1800); // Display loading screen for 1.8s
+    }, 1000);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      {/* Global magnetic cursor with gravity trail */}
+      <MagneticCursor />
       
       {/* Cinematic preloader overlay */}
-      <AnimatePresence>
-        {loading && <Preloader />}
+      <AnimatePresence mode="wait">
+        {loading && <Preloader onComplete={() => setLoading(false)} />}
       </AnimatePresence>
 
       {/* Main routing table */}

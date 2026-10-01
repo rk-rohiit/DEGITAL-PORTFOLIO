@@ -49,13 +49,13 @@ const Education = () => {
   const cardVariants = {
     initial: {
       x: 0,
-      borderColor: "rgba(0, 0, 0, 0.06)",
-      boxShadow: "0 10px 30px rgba(0, 0, 0, 0.03)",
+      borderColor: "rgba(255, 255, 255, 0.07)",
+      boxShadow: "0 10px 30px rgba(0, 0, 0, 0.4)",
     },
     hover: {
       x: 8,
-      borderColor: `${theme.palette.primary.light}30`,
-      boxShadow: "0 15px 35px rgba(204, 1, 2, 0.08)",
+      borderColor: "rgba(0, 242, 254, 0.4)",
+      boxShadow: "0 15px 35px rgba(0, 242, 254, 0.15)",
     },
   };
 
@@ -165,9 +165,8 @@ const Education = () => {
                     sx={{
                       p: { xs: 3, md: 4 },
                       borderRadius: 4,
-                      backgroundColor: theme.palette.background.paper,
-                      backdropFilter: "blur(10px)",
-                      border: "1px solid rgba(0, 0, 0, 0.06)",
+                      border: "1px solid rgba(255, 255, 255, 0.07)",
+                      backgroundColor: "rgba(17, 21, 36, 0.8)",
                       transition: "border-color 0.3s ease, box-shadow 0.3s ease",
                     }}
                   >

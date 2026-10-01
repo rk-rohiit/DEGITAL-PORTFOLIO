@@ -1,6 +1,7 @@
+// src/components/Navbar.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Terminal, FileText } from "lucide-react";
 import { Button } from "@mui/material";
 
 const Navbar = () => {
@@ -10,7 +11,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 40);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -28,7 +29,6 @@ const Navbar = () => {
 
   const scrollToSection = (href) => {
     if (window.location.pathname !== "/") {
-      // Redirect back to home with the target anchor hash
       window.location.href = "/" + href;
       return;
     }
@@ -60,13 +60,13 @@ const Navbar = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/90 backdrop-blur-md shadow-md"
+          ? "bg-slate-950/85 backdrop-blur-xl border-b border-slate-800/80 shadow-2xl shadow-black/60"
           : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
+          {/* Tech Logo */}
           <a
             href={window.location.pathname === "/" ? "#home" : "/"}
             onClick={(e) => {
@@ -77,59 +77,74 @@ const Navbar = () => {
                 scrollToSection("#home");
               }
             }}
-            className="text-2xl font-bold bg-gradient-to-r from-red-600 to-rose-500 bg-clip-text text-transparent"
+            className="flex items-center gap-2 group cursor-pointer"
           >
-            R
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-rose-600 to-cyan-500 flex items-center justify-center text-white shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+              <Terminal className="w-4 h-4" />
+            </div>
+            <span className="font-mono text-lg font-bold tracking-tight text-white">
+              <span className="text-cyan-400">&lt;</span>
+              <span className="bg-gradient-to-r from-rose-400 to-cyan-300 bg-clip-text text-transparent">Rohit</span>
+              <span className="text-gray-400">.ai</span>
+              <span className="text-cyan-400"> /&gt;</span>
+            </span>
           </a>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-7">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleNavLinkClick(e, link)}
-                className="text-gray-700 hover:text-red-600 transition-colors font-medium"
+                className="text-slate-300 hover:text-cyan-400 transition-colors font-mono text-sm tracking-wide hover:-translate-y-0.5 duration-200"
               >
                 {link.name}
               </a>
             ))}
+            
             <Button
               variant="contained"
               onClick={handleResumeDownload}
               sx={{
-                background: "linear-gradient(to right, #cc0102, #ff4d4d)",
+                background: "linear-gradient(135deg, #ff0055 0%, #00f2fe 100%)",
                 textTransform: "none",
-                fontWeight: "600",
-                borderRadius: "9999px",
+                fontWeight: 700,
+                fontSize: "0.85rem",
+                fontFamily: '"Fira Code", monospace',
+                borderRadius: "10px",
+                px: 3,
+                py: 1,
+                boxShadow: "0 4px 20px rgba(255, 0, 85, 0.3)",
                 "&:hover": {
-                  opacity: 0.9,
-                  background: "linear-gradient(to right, #ff4d4d, #cc0102)",
+                  boxShadow: "0 6px 25px rgba(0, 242, 254, 0.4)",
+                  transform: "translateY(-2px)",
                 },
               }}
+              startIcon={<FileText className="w-4 h-4" />}
             >
-              Resume
+              Resume.pdf
             </Button>
           </nav>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-gray-700 hover:text-red-600 transition-colors"
+            className="md:hidden text-slate-300 hover:text-cyan-400 p-2 rounded-lg bg-slate-900 border border-slate-800 transition-colors cursor-pointer"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation Dropdown */}
         {isMobileMenuOpen && (
-          <nav className="md:hidden mt-4 pb-4 flex flex-col gap-4 animate-slide-up bg-white/90 rounded-xl shadow-md p-4 backdrop-blur-md">
+          <nav className="md:hidden mt-4 pb-4 flex flex-col gap-3 animate-slide-up bg-slate-950/95 border border-slate-800/90 rounded-2xl shadow-2xl p-5 backdrop-blur-2xl">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleNavLinkClick(e, link)}
-                className="text-gray-700 hover:text-red-600 transition-colors font-medium py-2 text-center"
+                className="text-slate-300 hover:text-cyan-400 transition-colors font-mono text-sm py-2 px-3 rounded-lg hover:bg-slate-900"
               >
                 {link.name}
               </a>
@@ -139,17 +154,17 @@ const Navbar = () => {
               fullWidth
               onClick={handleResumeDownload}
               sx={{
-                background: "linear-gradient(to right, #cc0102, #ff4d4d)",
+                background: "linear-gradient(135deg, #ff0055 0%, #00f2fe 100%)",
                 textTransform: "none",
-                fontWeight: "600",
-                borderRadius: "9999px",
-                "&:hover": {
-                  opacity: 0.9,
-                  background: "linear-gradient(to right, #ff4d4d, #cc0102)",
-                },
+                fontWeight: 700,
+                fontFamily: '"Fira Code", monospace',
+                borderRadius: "10px",
+                py: 1.2,
+                mt: 2,
               }}
+              startIcon={<FileText className="w-4 h-4" />}
             >
-              Resume
+              Resume.pdf
             </Button>
           </nav>
         )}

@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Typography, Card, CardContent } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
+import ThreeSkillReactor from "./three/ThreeSkillReactor";
+import ThreeTiltCard from "./three/ThreeTiltCard";
+import { Atom, LayoutGrid, Terminal, Cpu, Zap } from "lucide-react";
 
 const skills = [
   // --- Frontend ---
@@ -107,6 +110,7 @@ const categories = ["All", "Frontend", "Backend", "Languages", "Tools", "AI & De
 export default function Skills() {
   const theme = useTheme();
   const [activeTab, setActiveTab] = useState("All");
+  const [viewMode, setViewMode] = useState("3d"); // "3d" or "grid"
 
   const filteredSkills = activeTab === "All"
     ? skills
@@ -115,23 +119,11 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="relative py-24 px-6 md:px-20 overflow-hidden"
-      style={{
-        background: `linear-gradient(135deg, ${theme.palette.background.default}, #f8fafc)`,
-      }}
+      className="relative py-24 px-6 md:px-20 overflow-hidden bg-gradient-to-b from-[#090a10] via-[#0c101c] to-[#090a10]"
     >
-      {/* Decorative background glows */}
-      <div
-        className="absolute top-0 left-0 w-72 h-72 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"
-        style={{ backgroundColor: theme.palette.primary.light }}
-      ></div>
-      <div
-        className="absolute bottom-0 right-0 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"
-        style={{
-          backgroundColor: theme.palette.secondary.light,
-          animationDelay: "2s",
-        }}
-      ></div>
+      {/* Decorative cyber background glows */}
+      <div className="absolute top-1/4 left-0 w-96 h-96 rounded-full bg-cyan-600/10 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-0 w-96 h-96 rounded-full bg-rose-600/10 blur-[120px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto text-center relative z-10">
         {/* Section Header */}
@@ -141,152 +133,192 @@ export default function Skills() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-cyan-500/30 text-xs font-mono text-cyan-400 mb-4 shadow-sm shadow-cyan-500/10">
+            <Cpu className="w-3.5 h-3.5 text-cyan-400" />
+            <span>stack.manifest // FULL_STACK_AI</span>
+          </div>
+
           <Typography
             variant="h3"
             sx={{
               fontWeight: 800,
-              background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              color: "#ffffff",
               fontFamily: '"Poppins", sans-serif',
               mb: 2,
             }}
           >
-            Skills & Technologies
+            Technologies &{" "}
+            <span className="bg-gradient-to-r from-rose-500 via-red-500 to-cyan-400 bg-clip-text text-transparent">
+              AI Arsenal
+            </span>
           </Typography>
+
           <div
             className="mx-auto mb-6"
             style={{
               width: "80px",
               height: "4px",
-              background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+              background: "linear-gradient(to right, #ff0055, #00f2fe)",
               borderRadius: "4px",
             }}
-          ></div>
+          />
+
           <Typography
             variant="body1"
             sx={{
-              color: theme.palette.text.secondary,
+              color: "#94a3b8",
               fontFamily: '"Poppins", sans-serif',
-              maxWidth: "650px",
+              maxWidth: "680px",
               mx: "auto",
-              mb: 8,
-              fontSize: "1.1rem",
+              mb: 6,
+              fontSize: "1.05rem",
+              lineHeight: 1.8,
             }}
           >
-            Proficient in modern web technologies, development tools, and AI tools
-            to build creative and scalable applications.
+            Engineering scalable web architectures and intelligent AI systems.
+            Interact with the 3D Quantum Cyber Reactor or browse the card matrix view.
           </Typography>
         </motion.div>
 
-        {/* Category Pills Menu */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          viewport={{ once: true }}
-          className="flex flex-wrap justify-center gap-3 mb-16"
-        >
-          {categories.map((cat) => (
+        {/* View Mode Toggle & Category Pills */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-10 max-w-4xl mx-auto font-mono">
+          {/* 3D vs Grid Toggle */}
+          <div className="flex items-center p-1 bg-slate-900/90 rounded-full border border-slate-800 shadow-xl">
             <button
-              key={cat}
-              onClick={() => setActiveTab(cat)}
-              className={`px-5 py-2 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 cursor-pointer ${
-                activeTab === cat
-                  ? "text-white shadow-md shadow-red-500/15"
-                  : "bg-white text-gray-600 hover:bg-gray-100/70 border border-gray-100"
+              onClick={() => setViewMode("3d")}
+              className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                viewMode === "3d"
+                  ? "bg-gradient-to-r from-rose-600 via-red-500 to-cyan-500 text-white shadow-lg shadow-cyan-500/25"
+                  : "text-slate-400 hover:text-slate-200"
               }`}
-              style={{
-                fontFamily: '"Poppins", sans-serif',
-                background: activeTab === cat
-                  ? `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`
-                  : undefined,
-              }}
             >
-              {cat}
+              <Cpu className="w-4 h-4 text-cyan-300" />
+              <span>3D Cyber Reactor</span>
             </button>
-          ))}
-        </motion.div>
+            <button
+              onClick={() => setViewMode("grid")}
+              className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                viewMode === "grid"
+                  ? "bg-gradient-to-r from-rose-600 via-red-500 to-cyan-500 text-white shadow-lg shadow-cyan-500/25"
+                  : "text-slate-400 hover:text-slate-200"
+              }`}
+            >
+              <LayoutGrid className="w-4 h-4" />
+              <span>Card Matrix</span>
+            </button>
+          </div>
 
-        {/* Interactive Skills Grid */}
-        <motion.div layout className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-          <AnimatePresence mode="popLayout">
-            {filteredSkills.map((skill) => (
-              <motion.div
-                layout
-                initial={{ opacity: 0, scale: 0.85 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.85 }}
-                transition={{ duration: 0.3 }}
-                key={skill.name}
+          {/* Category Filter Pills */}
+          <div className="flex flex-wrap justify-center gap-2">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveTab(cat)}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 cursor-pointer ${
+                  activeTab === cat
+                    ? "bg-gradient-to-r from-rose-600 to-cyan-500 text-white shadow-md shadow-cyan-500/20"
+                    : "bg-slate-900/80 text-slate-400 hover:text-slate-200 hover:bg-slate-800 border border-slate-800"
+                }`}
               >
-                <Card
-                  className="group relative overflow-hidden"
-                  sx={{
-                    borderRadius: 4,
-                    border: "1px solid rgba(0, 0, 0, 0.05)",
-                    background: "rgba(255, 255, 255, 0.85)",
-                    backdropFilter: "blur(10px)",
-                    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.02)",
-                    transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                    "&:hover": {
-                      transform: "translateY(-6px)",
-                      boxShadow: "0 15px 35px rgba(204, 1, 2, 0.08)",
-                      borderColor: `${theme.palette.primary.light}25`,
-                    },
-                  }}
-                >
-                  <CardContent
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      gap: 2,
-                      p: 4,
-                    }}
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Content: 3D Quantum Reactor OR Card Grid */}
+        <AnimatePresence mode="wait">
+          {viewMode === "3d" ? (
+            <motion.div
+              key="3d-reactor"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.4 }}
+              className="w-full flex justify-center"
+            >
+              <ThreeSkillReactor selectedCategory={activeTab} />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="grid-cards"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              layout
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"
+            >
+              <AnimatePresence mode="popLayout">
+                {filteredSkills.map((skill) => (
+                  <motion.div
+                    layout
+                    initial={{ opacity: 0, scale: 0.85 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.85 }}
+                    transition={{ duration: 0.3 }}
+                    key={skill.name}
                   >
-                    {/* Glowing back circle */}
-                    <div className="relative">
-                      <div
-                        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl"
-                        style={{
-                          background: `linear-gradient(to bottom right, ${theme.palette.primary.light}, ${theme.palette.secondary.light})`,
-                        }}
-                      ></div>
-                      
-                      {/* Icon container */}
-                      <div
-                        className="relative bg-gray-50/60 rounded-2xl p-4 border border-gray-100/60 transition-all duration-300 group-hover:scale-108 group-hover:bg-white group-hover:shadow-sm"
-                        style={{
-                          borderColor: theme.palette.divider,
+                    <ThreeTiltCard tiltMaxAngleX={15} tiltMaxAngleY={15} scale={1.05} className="rounded-2xl">
+                      <Card
+                        className="group relative overflow-hidden h-full"
+                        sx={{
+                          borderRadius: 4,
+                          border: "1px solid rgba(255, 255, 255, 0.07)",
+                          background: "rgba(17, 21, 36, 0.75)",
+                          backdropFilter: "blur(14px)",
+                          boxShadow: "0 10px 30px rgba(0, 0, 0, 0.4)",
+                          transition: "all 0.3s ease",
+                          "&:hover": {
+                            boxShadow: "0 15px 35px rgba(0, 242, 254, 0.15)",
+                            borderColor: "rgba(0, 242, 254, 0.35)",
+                          },
                         }}
                       >
-                        <img
-                          src={skill.icon}
-                          alt={skill.name}
-                          className="w-12 h-12 object-contain"
-                        />
-                      </div>
-                    </div>
+                        <CardContent
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            gap: 2,
+                            p: 4,
+                          }}
+                        >
+                          {/* Glowing back circle */}
+                          <div className="relative">
+                            <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl bg-gradient-to-br from-rose-500 to-cyan-400" />
 
-                    <Typography
-                      variant="subtitle2"
-                      sx={{
-                        fontWeight: 700,
-                        color: theme.palette.text.primary,
-                        fontFamily: '"Poppins", sans-serif',
-                        fontSize: "0.95rem",
-                        textAlign: "center",
-                      }}
-                    >
-                      {skill.name}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+                            {/* Icon container */}
+                            <div className="relative bg-slate-950/80 rounded-2xl p-4 border border-slate-800 transition-all duration-300 group-hover:scale-110 group-hover:border-cyan-500/40">
+                              <img
+                                src={skill.icon}
+                                alt={skill.name}
+                                className="w-12 h-12 object-contain"
+                              />
+                            </div>
+                          </div>
+
+                          <Typography
+                            variant="subtitle2"
+                            sx={{
+                              fontWeight: 700,
+                              color: "#f8fafc",
+                              fontFamily: '"Poppins", sans-serif',
+                              fontSize: "0.95rem",
+                              textAlign: "center",
+                            }}
+                          >
+                            {skill.name}
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                    </ThreeTiltCard>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
