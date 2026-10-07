@@ -10,7 +10,6 @@ import Testimonials from "../components/Testimonials";
 import About from "../components/About";
 import Education from "../components/Education.jsx";
 import ThreeGlobalBackground from "../components/three/ThreeGlobalBackground";
-import ThreeFloatingHUD from "../components/three/ThreeFloatingHUD";
 
 const Home = () => {
   useEffect(() => {
@@ -31,9 +30,6 @@ const Home = () => {
     <div className="relative min-h-screen overflow-x-hidden">
       {/* Three.js Continuous Scroll-Reactive 3D Canvas Background */}
       <ThreeGlobalBackground />
-
-      {/* Interactive 3D Engine HUD Badge */}
-      <ThreeFloatingHUD />
 
       <Navbar />
       <HeroSection />

@@ -16,7 +16,7 @@ const Projects = () => {
       tech: ["React.js", "Express.js", "MongoDB", "JWT"],
       date: "September 2025",
       status: "Live",
-      link: "https://collex-dev.vercel.app/",
+      link: "https://collex-nine.vercel.app/",
     },
     {
       title: "RestroSol – Hotel Management System",
@@ -52,7 +52,7 @@ const Projects = () => {
       className="py-24 px-6 md:px-20 bg-gradient-to-b from-[#090a10] via-[#0c101c] to-[#090a10] relative overflow-hidden"
     >
       <div className="max-w-6xl mx-auto relative z-10">
-        
+
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}

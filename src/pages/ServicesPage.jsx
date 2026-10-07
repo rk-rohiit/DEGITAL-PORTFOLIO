@@ -5,18 +5,21 @@ import Footer from "../components/Footer";
 
 const ServicesPage = () => {
   useEffect(() => {
-    // Scroll to the top on page load
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: "instant" });
+    document.title = "Services // Rohit Kumar | Full-Stack & AI Solutions";
+    return () => {
+      document.title = "Rohit Kumar | Full-Stack Developer & AI Engineer";
+    };
   }, []);
 
   return (
-    <>
+    <div className="min-h-screen bg-[#07080d] text-slate-100 flex flex-col">
       <Navbar />
-      <div className="pt-16">
+      <main className="flex-grow pt-16">
         <Services />
-      </div>
+      </main>
       <Footer />
-    </>
+    </div>
   );
 };
 
